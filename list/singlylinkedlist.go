@@ -9,6 +9,7 @@ func newNode(value int) *node {
 	return &node{value: value}
 }
 
+// SinglyLinkedList is an implementation of a linked list data structure
 type SinglyLinkedList struct {
 	head *node
 	tail *node
@@ -16,10 +17,7 @@ type SinglyLinkedList struct {
 	length int
 }
 
-func (sll *SinglyLinkedList) isEmpty() bool {
-	return sll.length == 0
-}
-
+// Push adds a new element to the end of the list
 func (sll *SinglyLinkedList) Push(val int) {
 
 	nextNode := newNode(val)
@@ -34,6 +32,7 @@ func (sll *SinglyLinkedList) Push(val int) {
 	sll.length++
 }
 
+// Pop removes the last element of the list and returns it
 func (sll *SinglyLinkedList) Pop() (int, bool) {
 
 	pre := sll.head
@@ -41,8 +40,8 @@ func (sll *SinglyLinkedList) Pop() (int, bool) {
 		return 0, false
 	}
 
-	pointer := sll.head.next
-	if pointer == nil {
+	cursor := sll.head.next
+	if cursor == nil {
 		val := sll.head.value
 		sll.head = nil
 		sll.tail = nil
@@ -51,12 +50,12 @@ func (sll *SinglyLinkedList) Pop() (int, bool) {
 		return val, true
 	}
 
-	for pointer.next != nil {
-		pre = pointer
-		pointer = pointer.next
+	for cursor.next != nil {
+		pre = cursor
+		cursor = cursor.next
 	}
 
-	val := pointer.value
+	val := cursor.value
 	pre.next = nil
 	sll.tail = pre
 	sll.length--
@@ -64,6 +63,7 @@ func (sll *SinglyLinkedList) Pop() (int, bool) {
 	return val, true
 }
 
+// Unshift adds a new element to the beginning of the list
 func (sll *SinglyLinkedList) Unshift(val int) {
 	nextNode := newNode(val)
 
@@ -77,6 +77,7 @@ func (sll *SinglyLinkedList) Unshift(val int) {
 	sll.length++
 }
 
+// Shift removes the element at the beginning of the list and returns it
 func (sll *SinglyLinkedList) Shift() (int, bool) {
 
 	if sll.isEmpty() {
