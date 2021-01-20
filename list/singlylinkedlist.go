@@ -120,6 +120,35 @@ func (sll *SinglyLinkedList) Set(index int, val int) error {
 	return nil
 }
 
+// Insert adds an element at the specified position to the list
+func (sll *SinglyLinkedList) Insert(index int, val int) error {
+	if index < 0 || index > sll.length {
+		return errors.New("index out of range")
+	}
+
+	if index == 0 {
+		sll.Unshift(val)
+		return nil
+	}
+
+	if index == sll.length {
+		sll.Push(val)
+		return nil
+	}
+
+	nodeToInsert := newNode(val)
+	node, err := sll.getNode(index - 1)
+
+	if err != nil {
+		return err
+	}
+
+	nodeToInsert.next = node.next
+	node.next = nodeToInsert
+	sll.length++
+	return nil
+}
+
 func (sll *SinglyLinkedList) isEmpty() bool {
 	return sll.length == 0
 }
