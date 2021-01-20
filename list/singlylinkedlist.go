@@ -1,5 +1,7 @@
 package list
 
+import "errors"
+
 type node struct {
 	value int
 	next  *node
@@ -94,4 +96,45 @@ func (sll *SinglyLinkedList) Shift() (int, bool) {
 	}
 
 	return val, true
+}
+
+// Get returns the value of an element at a certain position
+func (sll *SinglyLinkedList) Get(index int) (int, error) {
+	node, err := sll.getNode(index)
+	if err != nil {
+		return 0, err
+	}
+
+	return node.value, nil
+}
+
+// Set changes the value of an element at a certain position
+func (sll *SinglyLinkedList) Set(index int, val int) error {
+	node, err := sll.getNode(index)
+
+	if err != nil {
+		return err
+	}
+
+	node.value = val
+	return nil
+}
+
+func (sll *SinglyLinkedList) isEmpty() bool {
+	return sll.length == 0
+}
+
+func (sll *SinglyLinkedList) getNode(index int) (*node, error) {
+	if index < 0 || index >= sll.length {
+		return nil, errors.New("index out of range")
+	}
+
+	cursor := sll.head
+
+	for i := 0; i < index; {
+		cursor = cursor.next
+		i++
+	}
+
+	return cursor, nil
 }
