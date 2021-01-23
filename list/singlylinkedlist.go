@@ -175,6 +175,29 @@ func (sll *SinglyLinkedList) Remove(index int) error {
 	return nil
 }
 
+// Reverse inverts the singly linked list in place (i.e. not making a copy)
+func (sll *SinglyLinkedList) Reverse() {
+	if sll.length <= 1 {
+		return
+	}
+
+	var tmp *node
+	var previousNode *node
+	currentNode := sll.head
+
+	for i := 0; i < sll.length; {
+		tmp = currentNode.next
+		currentNode.next = previousNode
+		previousNode = currentNode
+		currentNode = tmp
+		i++
+	}
+
+	tmp = sll.head
+	sll.head = sll.tail
+	sll.tail = tmp
+}
+
 func (sll *SinglyLinkedList) isEmpty() bool {
 	return sll.length == 0
 }
