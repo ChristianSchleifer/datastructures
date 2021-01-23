@@ -149,6 +149,32 @@ func (sll *SinglyLinkedList) Insert(index int, val int) error {
 	return nil
 }
 
+// Remove deletes an element at the specified position from the list
+func (sll *SinglyLinkedList) Remove(index int) error {
+	if index < 0 || index >= sll.length {
+		return errors.New("index out of range")
+	}
+
+	if index == 0 {
+		sll.Shift()
+		return nil
+	}
+
+	if index == sll.length-1 {
+		sll.Pop()
+		return nil
+	}
+
+	node, err := sll.getNode(index - 1)
+	if err != nil {
+		return err
+	}
+
+	node.next = node.next.next
+	sll.length--
+	return nil
+}
+
 func (sll *SinglyLinkedList) isEmpty() bool {
 	return sll.length == 0
 }
