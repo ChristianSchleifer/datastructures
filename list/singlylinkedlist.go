@@ -185,12 +185,11 @@ func (sll *SinglyLinkedList) Reverse() {
 	var previousNode *node
 	currentNode := sll.head
 
-	for i := 0; i < sll.length; {
+	for i := 0; i < sll.length; i++ {
 		tmp = currentNode.next
 		currentNode.next = previousNode
 		previousNode = currentNode
 		currentNode = tmp
-		i++
 	}
 
 	tmp = sll.head
