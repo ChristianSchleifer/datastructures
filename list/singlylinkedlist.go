@@ -2,54 +2,55 @@ package list
 
 import "errors"
 
-type node struct {
+type singlyLinkedNode struct {
 	value int
-	next  *node
+	next  *singlyLinkedNode
 }
 
-func newNode(value int) *node {
-	return &node{value: value}
+func newNode(value int) *singlyLinkedNode {
+	return &singlyLinkedNode{value: value}
 }
 
 // SinglyLinkedList is an implementation of a linked list data structure
 type SinglyLinkedList struct {
-	head *node
-	tail *node
+	head *singlyLinkedNode
+	tail *singlyLinkedNode
 
 	length int
 }
 
 // Push adds a new element to the end of the list
-func (sll *SinglyLinkedList) Push(val int) {
+func (list *SinglyLinkedList) Push(val int) {
 
 	nextNode := newNode(val)
 
-	if sll.isEmpty() {
-		sll.head = nextNode
+	if list.isEmpty() {
+		list.head = nextNode
 	} else {
-		sll.tail.next = nextNode
+		list.tail.next = nextNode
 	}
 
-	sll.tail = nextNode
-	sll.length++
+	list.tail = nextNode
+	list.length++
 }
 
 // Pop removes the last element of the list and returns it
-func (sll *SinglyLinkedList) Pop() (int, bool) {
+func (list *SinglyLinkedList) Pop() (int, error) {
 
-	pre := sll.head
-	if pre == nil {
-		return 0, false
+	if list.isEmpty() {
+		return 0, errors.New("list is empty")
 	}
 
-	cursor := sll.head.next
-	if cursor == nil {
-		val := sll.head.value
-		sll.head = nil
-		sll.tail = nil
-		sll.length--
+	pre := list.head
+	cursor := list.head.next
 
-		return val, true
+	if cursor == nil {
+		val := list.head.value
+		list.head = nil
+		list.tail = nil
+		list.length--
+
+		return val, nil
 	}
 
 	for cursor.next != nil {
@@ -59,48 +60,48 @@ func (sll *SinglyLinkedList) Pop() (int, bool) {
 
 	val := cursor.value
 	pre.next = nil
-	sll.tail = pre
-	sll.length--
+	list.tail = pre
+	list.length--
 
-	return val, true
+	return val, nil
 }
 
 // Unshift adds a new element to the beginning of the list
-func (sll *SinglyLinkedList) Unshift(val int) {
+func (list *SinglyLinkedList) Unshift(val int) {
 	nextNode := newNode(val)
 
-	nextNode.next = sll.head
-	sll.head = nextNode
+	nextNode.next = list.head
+	list.head = nextNode
 
-	if sll.isEmpty() {
-		sll.tail = nextNode
+	if list.isEmpty() {
+		list.tail = nextNode
 	}
 
-	sll.length++
+	list.length++
 }
 
 // Shift removes the element at the beginning of the list and returns it
-func (sll *SinglyLinkedList) Shift() (int, bool) {
+func (list *SinglyLinkedList) Shift() (int, error) {
 
-	if sll.isEmpty() {
-		return 0, false
+	if list.isEmpty() {
+		return 0, errors.New("list is empty")
 	}
 
-	val := sll.head.value
+	val := list.head.value
 
-	sll.head = sll.head.next
-	sll.length--
+	list.head = list.head.next
+	list.length--
 
-	if sll.isEmpty() {
-		sll.tail = nil
+	if list.isEmpty() {
+		list.tail = nil
 	}
 
-	return val, true
+	return val, nil
 }
 
 // Get returns the value of an element at a certain position
-func (sll *SinglyLinkedList) Get(index int) (int, error) {
-	node, err := sll.getNode(index)
+func (list *SinglyLinkedList) Get(index int) (int, error) {
+	node, err := list.getNode(index)
 	if err != nil {
 		return 0, err
 	}
@@ -109,8 +110,8 @@ func (sll *SinglyLinkedList) Get(index int) (int, error) {
 }
 
 // Set changes the value of an element at a certain position
-func (sll *SinglyLinkedList) Set(index int, val int) error {
-	node, err := sll.getNode(index)
+func (list *SinglyLinkedList) Set(index int, val int) error {
+	node, err := list.getNode(index)
 
 	if err != nil {
 		return err
@@ -121,23 +122,23 @@ func (sll *SinglyLinkedList) Set(index int, val int) error {
 }
 
 // Insert adds an element at the specified position to the list
-func (sll *SinglyLinkedList) Insert(index int, val int) error {
-	if index < 0 || index > sll.length {
+func (list *SinglyLinkedList) Insert(index int, val int) error {
+	if index < 0 || index > list.length {
 		return errors.New("index out of range")
 	}
 
 	if index == 0 {
-		sll.Unshift(val)
+		list.Unshift(val)
 		return nil
 	}
 
-	if index == sll.length {
-		sll.Push(val)
+	if index == list.length {
+		list.Push(val)
 		return nil
 	}
 
 	nodeToInsert := newNode(val)
-	node, err := sll.getNode(index - 1)
+	node, err := list.getNode(index - 1)
 
 	if err != nil {
 		return err
@@ -145,68 +146,68 @@ func (sll *SinglyLinkedList) Insert(index int, val int) error {
 
 	nodeToInsert.next = node.next
 	node.next = nodeToInsert
-	sll.length++
+	list.length++
 	return nil
 }
 
 // Remove deletes an element at the specified position from the list
-func (sll *SinglyLinkedList) Remove(index int) error {
-	if index < 0 || index >= sll.length {
+func (list *SinglyLinkedList) Remove(index int) error {
+	if index < 0 || index >= list.length {
 		return errors.New("index out of range")
 	}
 
 	if index == 0 {
-		sll.Shift()
-		return nil
+		_, err := list.Shift()
+		return err
 	}
 
-	if index == sll.length-1 {
-		sll.Pop()
-		return nil
+	if index == list.length-1 {
+		_, err := list.Pop()
+		return err
 	}
 
-	node, err := sll.getNode(index - 1)
+	node, err := list.getNode(index - 1)
 	if err != nil {
 		return err
 	}
 
 	node.next = node.next.next
-	sll.length--
+	list.length--
 	return nil
 }
 
 // Reverse inverts the singly linked list in place (i.e. not making a copy)
-func (sll *SinglyLinkedList) Reverse() {
-	if sll.length <= 1 {
+func (list *SinglyLinkedList) Reverse() {
+	if list.length <= 1 {
 		return
 	}
 
-	var tmp *node
-	var previousNode *node
-	currentNode := sll.head
+	var tmp *singlyLinkedNode
+	var previousNode *singlyLinkedNode
+	currentNode := list.head
 
-	for i := 0; i < sll.length; i++ {
+	for i := 0; i < list.length; i++ {
 		tmp = currentNode.next
 		currentNode.next = previousNode
 		previousNode = currentNode
 		currentNode = tmp
 	}
 
-	tmp = sll.head
-	sll.head = sll.tail
-	sll.tail = tmp
+	tmp = list.head
+	list.head = list.tail
+	list.tail = tmp
 }
 
-func (sll *SinglyLinkedList) isEmpty() bool {
-	return sll.length == 0
+func (list *SinglyLinkedList) isEmpty() bool {
+	return list.length == 0
 }
 
-func (sll *SinglyLinkedList) getNode(index int) (*node, error) {
-	if index < 0 || index >= sll.length {
+func (list *SinglyLinkedList) getNode(index int) (*singlyLinkedNode, error) {
+	if index < 0 || index >= list.length {
 		return nil, errors.New("index out of range")
 	}
 
-	cursor := sll.head
+	cursor := list.head
 
 	for i := 0; i < index; {
 		cursor = cursor.next
