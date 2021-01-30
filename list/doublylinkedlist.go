@@ -13,15 +13,20 @@ func newDoublyLinkedNode(val int) *doublyLinkedNode {
 	return &doublyLinkedNode{value: val}
 }
 
-type DoublyLinkedList struct {
+type doublyLinkedList struct {
 	head *doublyLinkedNode
 	tail *doublyLinkedNode
 
 	length int
 }
 
+// NewDoublyLinkedList returns a doubly linked list based implementation of a list
+func NewDoublyLinkedList() List {
+	return &doublyLinkedList{}
+}
+
 // Push adds an element to the end of the list
-func (list *DoublyLinkedList) Push(val int) {
+func (list *doublyLinkedList) Push(val int) {
 	newNode := newDoublyLinkedNode(val)
 
 	if list.isEmpty() {
@@ -38,7 +43,7 @@ func (list *DoublyLinkedList) Push(val int) {
 }
 
 // Pop removes an element from the end of the list and returns it
-func (list *DoublyLinkedList) Pop() (int, error) {
+func (list *doublyLinkedList) Pop() (int, error) {
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
 	}
@@ -60,7 +65,7 @@ func (list *DoublyLinkedList) Pop() (int, error) {
 }
 
 // Shift removes an element from the beginning of the list and returns it
-func (list *DoublyLinkedList) Shift() (int, error) {
+func (list *doublyLinkedList) Shift() (int, error) {
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
 	}
@@ -81,7 +86,7 @@ func (list *DoublyLinkedList) Shift() (int, error) {
 }
 
 // Unshift adds an element to the beginning of the list
-func (list *DoublyLinkedList) Unshift(val int) {
+func (list *doublyLinkedList) Unshift(val int) {
 	newNode := newDoublyLinkedNode(val)
 
 	if list.isEmpty() {
@@ -98,7 +103,7 @@ func (list *DoublyLinkedList) Unshift(val int) {
 }
 
 // Get returns the value of an element at a certain position
-func (list *DoublyLinkedList) Get(index int) (int, error) {
+func (list *doublyLinkedList) Get(index int) (int, error) {
 	node, err := list.getNode(index)
 
 	if err != nil {
@@ -109,7 +114,7 @@ func (list *DoublyLinkedList) Get(index int) (int, error) {
 }
 
 // Set changes the value of an element at a certain position
-func (list *DoublyLinkedList) Set(index int, val int) error {
+func (list *doublyLinkedList) Set(index int, val int) error {
 	node, err := list.getNode(index)
 
 	if err != nil {
@@ -121,7 +126,7 @@ func (list *DoublyLinkedList) Set(index int, val int) error {
 }
 
 // Insert adds an element at the specified position to the list
-func (list *DoublyLinkedList) Insert(index int, val int) error {
+func (list *doublyLinkedList) Insert(index int, val int) error {
 	if index < 0 || index > list.length {
 		return errors.New("index out of range")
 	}
@@ -151,7 +156,7 @@ func (list *DoublyLinkedList) Insert(index int, val int) error {
 }
 
 // Remove deletes an element at the specified position from the list
-func (list *DoublyLinkedList) Remove(index int) error {
+func (list *doublyLinkedList) Remove(index int) error {
 	if index < 0 || index >= list.length {
 		return errors.New("index out of range")
 	}
@@ -177,7 +182,7 @@ func (list *DoublyLinkedList) Remove(index int) error {
 	return nil
 }
 
-func (list *DoublyLinkedList) getNode(index int) (*doublyLinkedNode, error) {
+func (list *doublyLinkedList) getNode(index int) (*doublyLinkedNode, error) {
 	if index < 0 || index >= list.length {
 		return nil, errors.New("index out of range")
 	}
@@ -200,6 +205,6 @@ func (list *DoublyLinkedList) getNode(index int) (*doublyLinkedNode, error) {
 	return cursor, nil
 }
 
-func (list *DoublyLinkedList) isEmpty() bool {
+func (list *doublyLinkedList) isEmpty() bool {
 	return list.length == 0
 }

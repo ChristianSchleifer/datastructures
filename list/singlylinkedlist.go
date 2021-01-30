@@ -11,16 +11,20 @@ func newNode(value int) *singlyLinkedNode {
 	return &singlyLinkedNode{value: value}
 }
 
-// SinglyLinkedList is an implementation of a linked list data structure
-type SinglyLinkedList struct {
+type singlyLinkedList struct {
 	head *singlyLinkedNode
 	tail *singlyLinkedNode
 
 	length int
 }
 
+// NewSinglyLinkedList returns a singly linked list based implementation of a list
+func NewSinglyLinkedList() List {
+	return &singlyLinkedList{}
+}
+
 // Push adds a new element to the end of the list
-func (list *SinglyLinkedList) Push(val int) {
+func (list *singlyLinkedList) Push(val int) {
 
 	nextNode := newNode(val)
 
@@ -35,7 +39,7 @@ func (list *SinglyLinkedList) Push(val int) {
 }
 
 // Pop removes the last element of the list and returns it
-func (list *SinglyLinkedList) Pop() (int, error) {
+func (list *singlyLinkedList) Pop() (int, error) {
 
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
@@ -67,7 +71,7 @@ func (list *SinglyLinkedList) Pop() (int, error) {
 }
 
 // Unshift adds a new element to the beginning of the list
-func (list *SinglyLinkedList) Unshift(val int) {
+func (list *singlyLinkedList) Unshift(val int) {
 	nextNode := newNode(val)
 
 	nextNode.next = list.head
@@ -81,7 +85,7 @@ func (list *SinglyLinkedList) Unshift(val int) {
 }
 
 // Shift removes the element at the beginning of the list and returns it
-func (list *SinglyLinkedList) Shift() (int, error) {
+func (list *singlyLinkedList) Shift() (int, error) {
 
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
@@ -100,7 +104,7 @@ func (list *SinglyLinkedList) Shift() (int, error) {
 }
 
 // Get returns the value of an element at a certain position
-func (list *SinglyLinkedList) Get(index int) (int, error) {
+func (list *singlyLinkedList) Get(index int) (int, error) {
 	node, err := list.getNode(index)
 	if err != nil {
 		return 0, err
@@ -110,7 +114,7 @@ func (list *SinglyLinkedList) Get(index int) (int, error) {
 }
 
 // Set changes the value of an element at a certain position
-func (list *SinglyLinkedList) Set(index int, val int) error {
+func (list *singlyLinkedList) Set(index int, val int) error {
 	node, err := list.getNode(index)
 
 	if err != nil {
@@ -122,7 +126,7 @@ func (list *SinglyLinkedList) Set(index int, val int) error {
 }
 
 // Insert adds an element at the specified position to the list
-func (list *SinglyLinkedList) Insert(index int, val int) error {
+func (list *singlyLinkedList) Insert(index int, val int) error {
 	if index < 0 || index > list.length {
 		return errors.New("index out of range")
 	}
@@ -151,7 +155,7 @@ func (list *SinglyLinkedList) Insert(index int, val int) error {
 }
 
 // Remove deletes an element at the specified position from the list
-func (list *SinglyLinkedList) Remove(index int) error {
+func (list *singlyLinkedList) Remove(index int) error {
 	if index < 0 || index >= list.length {
 		return errors.New("index out of range")
 	}
@@ -177,7 +181,7 @@ func (list *SinglyLinkedList) Remove(index int) error {
 }
 
 // Reverse inverts the singly linked list in place (i.e. not making a copy)
-func (list *SinglyLinkedList) Reverse() {
+func (list *singlyLinkedList) Reverse() {
 	if list.length <= 1 {
 		return
 	}
@@ -198,11 +202,11 @@ func (list *SinglyLinkedList) Reverse() {
 	list.tail = tmp
 }
 
-func (list *SinglyLinkedList) isEmpty() bool {
+func (list *singlyLinkedList) isEmpty() bool {
 	return list.length == 0
 }
 
-func (list *SinglyLinkedList) getNode(index int) (*singlyLinkedNode, error) {
+func (list *singlyLinkedList) getNode(index int) (*singlyLinkedNode, error) {
 	if index < 0 || index >= list.length {
 		return nil, errors.New("index out of range")
 	}
