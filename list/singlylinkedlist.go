@@ -3,11 +3,11 @@ package list
 import "errors"
 
 type singlyLinkedNode struct {
-	value int
+	value interface{}
 	next  *singlyLinkedNode
 }
 
-func newNode(value int) *singlyLinkedNode {
+func newNode(value interface{}) *singlyLinkedNode {
 	return &singlyLinkedNode{value: value}
 }
 
@@ -24,7 +24,7 @@ func NewSinglyLinkedList() List {
 }
 
 // Push adds a new element to the end of the list
-func (list *singlyLinkedList) Push(val int) {
+func (list *singlyLinkedList) Push(val interface{}) {
 
 	nextNode := newNode(val)
 
@@ -39,7 +39,7 @@ func (list *singlyLinkedList) Push(val int) {
 }
 
 // Pop removes the last element of the list and returns it
-func (list *singlyLinkedList) Pop() (int, error) {
+func (list *singlyLinkedList) Pop() (interface{}, error) {
 
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
@@ -71,7 +71,7 @@ func (list *singlyLinkedList) Pop() (int, error) {
 }
 
 // Unshift adds a new element to the beginning of the list
-func (list *singlyLinkedList) Unshift(val int) {
+func (list *singlyLinkedList) Unshift(val interface{}) {
 	nextNode := newNode(val)
 
 	nextNode.next = list.head
@@ -85,7 +85,7 @@ func (list *singlyLinkedList) Unshift(val int) {
 }
 
 // Shift removes the element at the beginning of the list and returns it
-func (list *singlyLinkedList) Shift() (int, error) {
+func (list *singlyLinkedList) Shift() (interface{}, error) {
 
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
@@ -104,7 +104,7 @@ func (list *singlyLinkedList) Shift() (int, error) {
 }
 
 // Get returns the value of an element at a certain position
-func (list *singlyLinkedList) Get(index int) (int, error) {
+func (list *singlyLinkedList) Get(index int) (interface{}, error) {
 	node, err := list.getNode(index)
 	if err != nil {
 		return 0, err
@@ -114,7 +114,7 @@ func (list *singlyLinkedList) Get(index int) (int, error) {
 }
 
 // Set changes the value of an element at a certain position
-func (list *singlyLinkedList) Set(index int, val int) error {
+func (list *singlyLinkedList) Set(index int, val interface{}) error {
 	node, err := list.getNode(index)
 
 	if err != nil {
@@ -126,7 +126,7 @@ func (list *singlyLinkedList) Set(index int, val int) error {
 }
 
 // Insert adds an element at the specified position to the list
-func (list *singlyLinkedList) Insert(index int, val int) error {
+func (list *singlyLinkedList) Insert(index int, val interface{}) error {
 	if index < 0 || index > list.length {
 		return errors.New("index out of range")
 	}

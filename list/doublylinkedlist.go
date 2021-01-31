@@ -3,13 +3,13 @@ package list
 import "errors"
 
 type doublyLinkedNode struct {
-	value int
+	value interface{}
 
 	next *doublyLinkedNode
 	prev *doublyLinkedNode
 }
 
-func newDoublyLinkedNode(val int) *doublyLinkedNode {
+func newDoublyLinkedNode(val interface{}) *doublyLinkedNode {
 	return &doublyLinkedNode{value: val}
 }
 
@@ -26,7 +26,7 @@ func NewDoublyLinkedList() List {
 }
 
 // Push adds an element to the end of the list
-func (list *doublyLinkedList) Push(val int) {
+func (list *doublyLinkedList) Push(val interface{}) {
 	newNode := newDoublyLinkedNode(val)
 
 	if list.isEmpty() {
@@ -43,7 +43,7 @@ func (list *doublyLinkedList) Push(val int) {
 }
 
 // Pop removes an element from the end of the list and returns it
-func (list *doublyLinkedList) Pop() (int, error) {
+func (list *doublyLinkedList) Pop() (interface{}, error) {
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
 	}
@@ -65,7 +65,7 @@ func (list *doublyLinkedList) Pop() (int, error) {
 }
 
 // Shift removes an element from the beginning of the list and returns it
-func (list *doublyLinkedList) Shift() (int, error) {
+func (list *doublyLinkedList) Shift() (interface{}, error) {
 	if list.isEmpty() {
 		return 0, errors.New("list is empty")
 	}
@@ -86,7 +86,7 @@ func (list *doublyLinkedList) Shift() (int, error) {
 }
 
 // Unshift adds an element to the beginning of the list
-func (list *doublyLinkedList) Unshift(val int) {
+func (list *doublyLinkedList) Unshift(val interface{}) {
 	newNode := newDoublyLinkedNode(val)
 
 	if list.isEmpty() {
@@ -103,7 +103,7 @@ func (list *doublyLinkedList) Unshift(val int) {
 }
 
 // Get returns the value of an element at a certain position
-func (list *doublyLinkedList) Get(index int) (int, error) {
+func (list *doublyLinkedList) Get(index int) (interface{}, error) {
 	node, err := list.getNode(index)
 
 	if err != nil {
@@ -114,7 +114,7 @@ func (list *doublyLinkedList) Get(index int) (int, error) {
 }
 
 // Set changes the value of an element at a certain position
-func (list *doublyLinkedList) Set(index int, val int) error {
+func (list *doublyLinkedList) Set(index int, val interface{}) error {
 	node, err := list.getNode(index)
 
 	if err != nil {
@@ -126,7 +126,7 @@ func (list *doublyLinkedList) Set(index int, val int) error {
 }
 
 // Insert adds an element at the specified position to the list
-func (list *doublyLinkedList) Insert(index int, val int) error {
+func (list *doublyLinkedList) Insert(index int, val interface{}) error {
 	if index < 0 || index > list.length {
 		return errors.New("index out of range")
 	}

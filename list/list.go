@@ -1,12 +1,12 @@
 package list
 
 type List interface {
-	Push(int)
-	Pop() (int, error)
-	Unshift(int)
-	Shift() (int, error)
-	Get(int) (int, error)
-	Set(int, int) error
-	Insert(int, int) error
+	Push(interface{})
+	Pop() (interface{}, error)
+	Unshift(interface{})
+	Shift() (interface{}, error)
+	Get(int) (interface{}, error)
+	Set(int, interface{}) error
+	Insert(int, interface{}) error
 	Remove(int) error
 }

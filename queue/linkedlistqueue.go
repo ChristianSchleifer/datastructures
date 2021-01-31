@@ -14,11 +14,11 @@ func NewLinkedListQueue() Queue {
 }
 
 // Enqueue adds an element to the queue
-func (q *linkedListQueue) Enqueue(val int) {
+func (q *linkedListQueue) Enqueue(val interface{}) {
 	q.list.Push(val)
 }
 
 // Dequeue removes an element from the queue
-func (q *linkedListQueue) Dequeue() (int, error) {
+func (q *linkedListQueue) Dequeue() (interface{}, error) {
 	return q.list.Shift()
 }
