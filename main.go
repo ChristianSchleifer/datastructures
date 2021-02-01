@@ -2,45 +2,38 @@ package main
 
 import (
 	"fmt"
-	"github.com/ChristianSchleifer/datastructures/list"
+	"github.com/ChristianSchleifer/datastructures/tree"
 )
 
 func main() {
-	fmt.Println("Datastructures: ")
 
-	fmt.Println("Singly linked list: ")
+	t := tree.NewBinarySearchTree()
 
-	sll := list.SinglyLinkedList{}
 
-	sll.Push(1)
-	sll.Push(2)
-	sll.Push(3)
-	sll.Push(4)
-	sll.Push(5)
+	t.Insert(10)
+	t.Insert(6)
+	t.Insert(15)
+	t.Insert(3)
+	t.Insert(8)
+	t.Insert(20)
 
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
-	fmt.Println(sll.Pop())
 
-	sll.Unshift(5)
-	sll.Unshift(4)
-	sll.Unshift(3)
-	sll.Unshift(2)
-	sll.Unshift(1)
+	fmt.Println("Breadth first")
 
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
-	fmt.Println(sll.Shift())
+	t.TraverseBreadthFirst()
+
+	fmt.Println("-------------------")
+
+	fmt.Println("Pre Order")
+	t.TraversePreOrder()
+
+	fmt.Println("-------------------")
+
+	fmt.Println("In Order")
+	t.TraverseInOrder()
+
+	fmt.Println("-------------------")
+
+	fmt.Println("Post Order")
+	t.TraversePostOrder()
 }
